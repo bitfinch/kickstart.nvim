@@ -80,8 +80,8 @@ vim.opt.smartindent = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
-vim.keymap.set('n', '<leader>b[', ':bprev<CR>', { desc = 'Previous Buffer' })
-vim.keymap.set('n', '<leader>b]', ':bnext<CR>', { desc = 'Next Buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Previous Buffer' })
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close Buffer' })
 vim.keymap.set('v', '<S-J>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
 vim.keymap.set('v', '<S-K>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
