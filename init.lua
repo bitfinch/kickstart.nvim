@@ -73,18 +73,22 @@ vim.opt.scrolloff = 999
 
 -- Personal tabstop and shiftwidth preference
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.smarttab = true
+vim.opt.shiftwidth = 0
+vim.opt.expandtab = true
 vim.opt.smartindent = true
+vim.opt.smarttab = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
-vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Previous Buffer' })
-vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next Buffer' })
+-- vim.keymap.set('n', '<leader>b[', ':bprev<CR>', { desc = 'Previous Buffer' })
+-- vim.keymap.set('n', '<leader>b]', ':bnext<CR>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close Buffer' })
 vim.keymap.set('v', '<S-J>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
 vim.keymap.set('v', '<S-K>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
+
+vim.keymap.set('n', '<leader>\\', '<CMD>Oil<CR>', { desc = 'Open oil' })
+vim.keymap.set('v', '<leader>\\', '<CMD>Oil<CR>', { desc = 'Open oil' })
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
@@ -352,7 +356,6 @@ require('lazy').setup({
             'prettier',
             'stylua',
             'pylint',
-            'eslint_d',
           },
         },
       },
@@ -774,7 +777,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'astro', 'bash', 'c', 'css', 'html', 'lua', 'luadoc', 'markdown', 'typescript', 'vim', 'vimdoc' },
+      ensure_installed = { 'astro', 'bash', 'c', 'css', 'html', 'lua', 'luadoc', 'markdown', 'tsx', 'typescript', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -801,6 +804,12 @@ require('lazy').setup({
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      max_lines = 3,
+    },
   },
   -- This is what powers LazyVim's fancy-looking
   -- tabs, which include filetype icons and close buttons.
@@ -855,12 +864,28 @@ require('lazy').setup({
       -- add any custom options here
     },
   },
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   -- 'rainglow/vim',
+  --   priority = 1000,
+  --   config = true,
+  --   opts = {},
+  -- },
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
   {
-    -- 'ellisonleao/gruvbox.nvim',
-    'rainglow/vim',
-    priority = 1000,
-    -- config = true,
-    -- opts = {},
+    'rose-pine/neovim',
+    config = function()
+      require('rose-pine').setup {
+        styles = {
+          italic = false,
+        },
+      }
+    end,
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -875,10 +900,11 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.lazygit',
   require 'kickstart.plugins.alpha',
+  require 'kickstart.plugins.oil',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -908,6 +934,6 @@ require('lazy').setup({
   },
 })
 
-vim.cmd.colorscheme 'userscape-contrast'
+vim.cmd 'colorscheme rose-pine'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
