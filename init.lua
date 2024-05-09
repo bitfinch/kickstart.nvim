@@ -1,127 +1,58 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- True colors support
-vim.opt.termguicolors = true
-
--- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
-vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
-
--- Enable break indent
+vim.opt.autoindent = true
+vim.opt.background = 'dark'
+vim.opt.backspace = 'indent,eol,start'
 vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.cursorline = true
+vim.opt.expandtab = true
+vim.opt.hlsearch = true
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
-
--- Decrease update time
-vim.opt.updatetime = 250
-
--- Decrease mapped sequence wait time
--- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
-
--- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
+vim.opt.inccommand = 'split'
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.mouse = 'a'
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.scrolloff = 999
-
--- Personal tabstop and shiftwidth preference
-vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
-vim.opt.expandtab = true
+vim.opt.showmode = false
+vim.opt.signcolumn = 'yes'
+vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.smarttab = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.swapfile = false
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.timeoutlen = 500
+vim.opt.undofile = true
+vim.opt.updatetime = 150
+vim.opt.wrap = false
 
 -- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '\\', '<CMD>Oil --float<CR>', { desc = 'Open oil' })
 -- vim.keymap.set('n', '<leader>b[', ':bprev<CR>', { desc = 'Previous Buffer' })
 -- vim.keymap.set('n', '<leader>b]', ':bnext<CR>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close Buffer' })
-vim.keymap.set('v', '<S-J>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
-vim.keymap.set('v', '<S-K>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
-
-vim.keymap.set('n', '<leader>\\', '<CMD>Oil<CR>', { desc = 'Open oil' })
-vim.keymap.set('v', '<leader>\\', '<CMD>Oil<CR>', { desc = 'Open oil' })
-
--- Set highlight on search, but clear on pressing <Esc> in normal mode
-vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('v', '<S-J>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
+vim.keymap.set('v', '<S-K>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
+vim.keymap.set('v', '<leader>\\', '<CMD>Oil<CR>', { desc = 'Open oil' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -351,9 +282,9 @@ require('lazy').setup({
         'WhoIsSethDaniel/mason-tool-installer.nvim',
         opts = {
           ensure_installed = {
+            'prettier',
             'black',
             'isort',
-            'prettier',
             'stylua',
             'pylint',
           },
@@ -510,20 +441,15 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         astro = {},
+        cssls = {},
+        emmet_ls = {
+          filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
+        },
         gopls = {},
-        pyright = {},
-        ruff = {},
-        tailwindcss = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
-        --
-
+        graphql = {
+          filetypes = { 'graphql', 'gql', 'svelte', 'typescriptreact', 'javascriptreact' },
+        },
+        html = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -538,6 +464,21 @@ require('lazy').setup({
             },
           },
         },
+        pyright = {},
+        ruff = {},
+        svelte = {
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd('BufWritePost', {
+              pattern = { '*.js', '*.ts' },
+              callback = function(ctx)
+                -- Here use ctx.match instead of ctx.file
+                client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+              end,
+            })
+          end,
+        },
+        tailwindcss = {},
+        tsserver = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -777,7 +718,30 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'astro', 'bash', 'c', 'css', 'html', 'lua', 'luadoc', 'markdown', 'tsx', 'typescript', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'astro',
+        'bash',
+        'bash',
+        'c',
+        'css',
+        'dockerfile',
+        'gitignore',
+        'graphql',
+        'html',
+        'javascript',
+        'json',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'svelte',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -788,6 +752,7 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      sync_install = true,
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
